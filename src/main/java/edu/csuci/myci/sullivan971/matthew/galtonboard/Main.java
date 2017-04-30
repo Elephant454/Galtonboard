@@ -5,6 +5,10 @@ import javax.swing.*;
 
 public class Main {
     public static void main (String[] args) {
+        createGraphics();
+    }
+
+    public static void createGraphics() {
         try {
             //System.out.println(UIManager.getSystemLookAndFeelClassName());
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
@@ -37,5 +41,6 @@ public class Main {
         window.pack();
         window.setSize(800, 600);
         window.setVisible(true);
+        
     }
 }
