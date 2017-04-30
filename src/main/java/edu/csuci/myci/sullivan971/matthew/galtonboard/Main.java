@@ -12,26 +12,22 @@ public class Main {
             //System.out.println(UIManager.getSystemLookAndFeelClassName());
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (UnsupportedLookAndFeelException e) {
+        }catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
            // handle exception
-        }
-        catch (ClassNotFoundException e) {
+        }catch (ClassNotFoundException e) {
             e.printStackTrace();
            // handle exception
-        }
-        catch (InstantiationException e) {
+        }catch (InstantiationException e) {
             e.printStackTrace();
            // handle exception
-        }
-        catch (IllegalAccessException e) {
+        }catch (IllegalAccessException e) {
             e.printStackTrace();
            // handle exception
         }
 
         //Create the window
-        JFrame window = new JFrame("texteditor");
+        JFrame window = new JFrame("galtonboard");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
 
