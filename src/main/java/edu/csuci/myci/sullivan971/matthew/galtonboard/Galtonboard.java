@@ -18,7 +18,7 @@ public class Galtonboard {
         }
 
         // based off of the number of bins, generate every layer in the board
-        for(int i=layers.length-1; i>1; i++) {
+        for(int i=layers.length-1; i>1; i--) {
             layers[i - 1] = generatePreviousLayer(layers[i]);
         }
         
