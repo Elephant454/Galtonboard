@@ -4,11 +4,8 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 public class Main {
-
     public static void main (String[] args) {
-
         try {
-
             //System.out.println(UIManager.getSystemLookAndFeelClassName());
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
