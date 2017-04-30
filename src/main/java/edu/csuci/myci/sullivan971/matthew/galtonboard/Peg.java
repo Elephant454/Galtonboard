@@ -8,7 +8,7 @@ public class Peg extends BallPosition {
     
     public Peg() {}
     
-    public Peg(Peg left, Peg right) {
+    public Peg(BallPosition left, BallPosition right) {
         setLeft(left);
         setRight(right);
     }
@@ -16,15 +16,15 @@ public class Peg extends BallPosition {
     public BallPosition getLeft() {
         return this.left;
     }
-    public void setLeft(Peg peg) {
-        this.left = peg;
+    public void setLeft(BallPosition ballPosition) {
+        this.left = ballPosition;
     }
     
     public BallPosition getRight() {
         return this.right;
     }
-    public void setRight(Peg peg) {
-        this.right = peg;
+    public void setRight(BallPosition ballPosition) {
+        this.right = ballPosition;
     }
 
     public BallPosition chooseDirection() {
