@@ -5,10 +5,41 @@ import javax.swing.*;
 
 public class Main {
     public static void main (String[] args) {
-        createGraphics();
+        // createGraphics();
+
+        // create a new Galtonboard with 4 bins
+        Galtonboard galtonboard = new Galtonboard(4);
+        System.out.println(parseBracketedToString(galtonboard.toString()));
+    }
+
+    public static String parseBracketedToString(String str) {
+        StringBuilder result = new StringBuilder();
+        int level = -1;
+
+        for(int i=0; i<str.length(); i++) {
+            switch(str.charAt(i)) {
+            case '[':
+                level++;
+                break;
+            case ']':
+                level--;
+                break;
+            case ':':
+            case ',':
+                result.append("\n");
+                break;
+            default:
+                for(int j=0; j<level; j++) result.append("    ");
+                result.append(str.charAt(i));
+            }
+        }
+
+        return result.toString();
     }
 
     public static void createGraphics() {
+        // the graphics are from a previous project and currently don't do
+        //  anything relevant
         try {
             //System.out.println(UIManager.getSystemLookAndFeelClassName());
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
@@ -41,6 +72,5 @@ public class Main {
         window.pack();
         window.setSize(800, 600);
         window.setVisible(true);
-        
     }
 }

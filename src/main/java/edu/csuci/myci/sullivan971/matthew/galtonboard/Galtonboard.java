@@ -13,12 +13,13 @@ public class Galtonboard {
         this.layers = new BallPosition[numberOfBins][];
 
         // populate the last layer of the galtonboard with bins
+        this.layers[layers.length-1] = new BallPosition[numberOfBins];
         for(int i=0; i<numberOfBins; i++) {
             this.layers[this.layers.length-1][i] = new Bin();
         }
 
         // based off of the number of bins, generate every layer in the board
-        for(int i=layers.length-1; i>1; i--) {
+        for(int i=layers.length-1; i>0; i--) {
             layers[i - 1] = generatePreviousLayer(layers[i]);
         }
         
@@ -31,8 +32,23 @@ public class Galtonboard {
         for(int i=0; i<result.length; i++) {
             result[i] = new Peg(layer[i], layer[i+1]);
         }
-
+        
         return result;
     }
-    
+
+    public String toString() {
+        StringBuilder result = new StringBuilder("Galtonboard:\n");
+        
+        for(int i=0; i<layers.length; i++) {
+            result.append("[Layer ");
+            result.append(i);
+            result.append(": ");
+            for(int j=0; j<layers[i].length; j++) {
+                result.append(layers[i][j].toString());
+            }
+            result.append("]");
+        }
+        
+        return result.toString();
+    }
 }

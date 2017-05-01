@@ -5,4 +5,8 @@ public class Bin extends BallPosition {
     public BallPosition chooseDirection() {
         return null;
     }
+
+    public String toString() {
+        return "[Bin: " + super.toString() + "]";
+    }
 }
