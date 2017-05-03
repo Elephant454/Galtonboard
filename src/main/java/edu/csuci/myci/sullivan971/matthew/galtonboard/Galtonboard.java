@@ -64,13 +64,13 @@ public class Galtonboard {
         layers[0][0].addBall(ball);
 
         BallPosition previousBallPosition = layers[0][0];
-        BallPosition currentBallPosition = layers[0][0];
+        BallPosition currentBallPosition = previousBallPosition.chooseDirection();
 
         try{
-            while(true) {
-                currentBallPosition = previousBallPosition.chooseDirection();
+            while(currentBallPosition != null) {
                 currentBallPosition.addBall(previousBallPosition.removeBall());
                 previousBallPosition = currentBallPosition;
+                currentBallPosition = previousBallPosition.chooseDirection();
             }
         }catch (NullPointerException npe) {}
     }
