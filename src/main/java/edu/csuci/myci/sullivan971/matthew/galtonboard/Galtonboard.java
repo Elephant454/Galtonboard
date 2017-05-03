@@ -6,7 +6,8 @@ public class Galtonboard {
 
     private int currentBallId = 0;
 
-    private RandomPalette randomPalette = new RandomPalette(0.6f, 0.7f);
+    //private RandomPalette randomPalette = new RandomPalette(0.6f, 0.7f);
+    private RandomPalette randomPalette = new RandomPalette(0.8f, 0.7f);
     
     public Galtonboard (int numberOfBins){
         if(numberOfBins%2 == 1) throw new IllegalArgumentException("The number of bins must be even.");
