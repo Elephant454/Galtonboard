@@ -3,6 +3,10 @@ package edu.csuci.myci.sullivan971.matthew.galtonboard;
 public class Galtonboard {
     private int numberOfBins;
     private BallPosition[][] layers;
+
+    private int currentBallId = 0;
+
+    private RandomPalette randomPalette = new RandomPalette(0.6f, 0.7f);
     
     public Galtonboard (int numberOfBins){
         if(numberOfBins%2 == 1) throw new IllegalArgumentException("The number of bins must be even.");
@@ -37,18 +41,37 @@ public class Galtonboard {
     }
 
     public String toString() {
-        StringBuilder result = new StringBuilder("Galtonboard:\n");
+        StringBuilder result = new StringBuilder("[Galtonboard:");
         
         for(int i=0; i<layers.length; i++) {
-            result.append("[Layer ");
+            result.append("[Layer");
             result.append(i);
-            result.append(": ");
+            result.append(":");
             for(int j=0; j<layers[i].length; j++) {
                 result.append(layers[i][j].toString());
             }
             result.append("]");
         }
         
+        result.append("]");
+        
         return result.toString();
+    }
+
+    public void dropABall() {
+        Ball ball = new Ball(currentBallId, randomPalette.next());
+        currentBallId++;
+        layers[0][0].addBall(ball);
+
+        BallPosition previousBallPosition = layers[0][0];
+        BallPosition currentBallPosition = layers[0][0];
+
+        try{
+            while(true) {
+                currentBallPosition = previousBallPosition.chooseDirection();
+                currentBallPosition.addBall(previousBallPosition.removeBall());
+                previousBallPosition = currentBallPosition;
+            }
+        }catch (NullPointerException npe) {}
     }
 }

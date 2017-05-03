@@ -7,6 +7,6 @@ public class Bin extends BallPosition {
     }
 
     public String toString() {
-        return "[Bin: " + super.toString() + "]";
+        return "[Bin (" + System.identityHashCode(this) + "):" + super.toString() + "]";
     }
 }

@@ -32,14 +32,20 @@ public class Peg extends BallPosition {
     }
 
     public String toString() {
-        StringBuilder result = new StringBuilder("[Peg: ]");
+        StringBuilder result = new StringBuilder("[Peg(");
+        result.append(System.identityHashCode(this));
+        result.append("):");
         result.append(super.toString());
-        result.append("[Left: ");
-        result.append(getLeft().toString());
+        result.append("[Left:");
+        //result.append(getLeft().toString());
+        // this prevents us from going down a rabbithole of printing out every
+        //  single possible path
+        result.append(System.identityHashCode(getLeft()));
         result.append("]");
-        result.append("[Right: ");
-        result.append(getRight().toString());
-        result.append("]");
+        result.append("[Right:");
+        //result.append(getRight().toString());
+        result.append(System.identityHashCode(getRight()));
+        result.append("]]");
 
         return result.toString();
     }

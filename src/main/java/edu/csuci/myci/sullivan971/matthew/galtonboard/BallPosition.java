@@ -33,7 +33,7 @@ public abstract class BallPosition implements Iterable<Ball>{
     public abstract BallPosition chooseDirection();
 
     public String toString() {
-        StringBuilder result = new StringBuilder("[Balls: ");
+        StringBuilder result = new StringBuilder("[Balls:");
         Deque<Ball> temp = new ArrayDeque<Ball>();
 
         try {

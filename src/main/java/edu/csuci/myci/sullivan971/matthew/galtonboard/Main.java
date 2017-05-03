@@ -10,6 +10,10 @@ public class Main {
         // create a new Galtonboard with 4 bins
         Galtonboard galtonboard = new Galtonboard(4);
         System.out.println(parseBracketedToString(galtonboard.toString()));
+        //System.out.println(galtonboard.toString());
+
+        galtonboard.dropABall();
+        System.out.println(galtonboard.toString());
     }
 
     public static String parseBracketedToString(String str) {
@@ -19,17 +23,23 @@ public class Main {
         for(int i=0; i<str.length(); i++) {
             switch(str.charAt(i)) {
             case '[':
+                for(int j=0; j<level; j++) result.append("    ");
                 level++;
+                System.out.print(level);
                 break;
             case ']':
                 level--;
+                result.append("\n");
+                System.out.print(level);
+                //for(int j=0; j<level; j++) result.append("    ");
                 break;
             case ':':
-            case ',':
+                //case ',':
                 result.append("\n");
+                for(int j=0; j<level; j++) result.append("    ");
                 break;
             default:
-                for(int j=0; j<level; j++) result.append("    ");
+                //for(int j=0; j<level; j++) result.append("    ");
                 result.append(str.charAt(i));
             }
         }
