@@ -19,8 +19,8 @@ public class Main {
 
         //createNewGraphics(galtonboard);
 
-        galtonboard.dropBalls(512);
-        System.out.println(Galtonboard.getBallsPerBinString(galtonboard.getBallsPerBin()));
+        galtonboard.dropBalls(1024);
+        System.out.println(Galtonboard.getBallsPerBinString(Galtonboard.createHistogramArray(galtonboard.getBallsPerBin())));
     }
 
     public static String parseBracketedToString(String str) {

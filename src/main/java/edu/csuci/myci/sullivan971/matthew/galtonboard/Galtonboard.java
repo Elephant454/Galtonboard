@@ -1,5 +1,6 @@
 package edu.csuci.myci.sullivan971.matthew.galtonboard;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.ArrayDeque;
 
@@ -102,8 +103,19 @@ public class Galtonboard {
         
         return result;
     }
+    
+    public static Integer[] createHistogramArray(int[] locationFrequencyData) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        for(int i=0; i<locationFrequencyData.length; i++) {
+            for(int j=0; j<locationFrequencyData[i]; j++) {
+                result.add(i);
+            }
+        }
 
-    public static String getBallsPerBinString(int[] ballsPerBin) {
+        return result.toArray(new Integer[result.size()]);
+    }
+
+    public static String getBallsPerBinString(Integer[] ballsPerBin) {
         StringBuilder result = new StringBuilder("[");
         
         for(int i=0; i<ballsPerBin.length-2; i++) {
@@ -115,4 +127,6 @@ public class Galtonboard {
 
         return result.toString();
     }
+
+    
 }
