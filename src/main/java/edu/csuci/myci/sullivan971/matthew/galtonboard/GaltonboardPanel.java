@@ -1,14 +1,20 @@
 package edu.csuci.myci.sullivan971.matthew.galtonboard;
 
+import javax.swing.JPanel;
+
+import java.awt.*;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+
 public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
-    private int binWidth;
-    private int binHeight;
+    private int binWidth = 10;
+    private int binHeight = 50;
 
-    private int pegRadius;
-    private int pegDeltaX;
-    private int pegDeltaY;
+    private int pegRadius = 5;
+    private int pegDeltaX = 20;
+    private int pegDeltaY = 20;
 
-    private int ballRadius;
+    private int ballRadius = 10;
 
     private Galtonboard galtonboard;
 
@@ -27,32 +33,17 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     // there should be 1000 frames every 30 seconds, or 30 frames per second
     final double TARGET_FRAMERATE = 1.0/30 * MILLISECONDS_PER_SECOND;
 
-    //RandomPalette randomPalette = new RandomPalette(0.5f, 0.6f);
-    RandomPalette randomPalette = new RandomPalette(0.8f, 0.7f);
-
-    ArrayDeque<Character> charQueue = new ArrayDeque<>();
-    ArrayDeque<Color> colorQueue = new ArrayDeque<>();
-
-    JLabel label = new JLabel();
-    String labelText = "";
-
-    int fontSize = 12;
-
     Thread drawingThread = new Thread(this);
 
     public GaltonboardPanel(Galtonboard galtonboard) {
         this.galtonboard = galtonboard;
 
-
-        // start of constructor that I hastily copied over
+        // start of parts of the constructor that I hastily copied over
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.anchor = GridBagConstraints.NORTHWEST;
-        this.add(label, gbc);
-
-        colorQueue.add(Color.BLACK);
 
         setFocusable(true);
         addKeyListener(this);
@@ -68,7 +59,13 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
         g2.clearRect(0, 0, getWidth(), getHeight());
 
-        g2.setFont(new Font("Consolas", Font.PLAIN, fontSize));
+        // numberOfBins - 1 is the number of divisions between bins
+        int xDelta = this.getWidth() / (galtonboard.getNumberOfBins() - 1);
+        for(int i=0; i<galtonboard.getNumberOfBins(); i++) {
+            
+            System.out.println(i + "," + i*xDelta);
+            g2.drawLine(i*xDelta, getHeight(), i*xDelta, getHeight() - binHeight);
+        }
     }
 
     long sleepLength;
@@ -77,7 +74,6 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
             currentTime = System.nanoTime();
 
             // do the actual logic for this tick
-            parseInput();
             repaint();
 
             // use the difference in time to determine how long we should sleep
@@ -96,11 +92,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
-
-    public void keyTyped(KeyEvent e){
-        charQueue.push(e.getKeyChar());
-        System.out.println(labelText);
-    }
+    public void keyTyped(KeyEvent e){}
     public void keyPressed(KeyEvent e){}
     public void keyReleased(KeyEvent e){}
 }
