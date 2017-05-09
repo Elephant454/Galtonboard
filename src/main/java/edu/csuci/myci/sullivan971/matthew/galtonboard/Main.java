@@ -17,10 +17,12 @@ public class Main {
         //galtonboard.dropABall();
         //System.out.println(galtonboard.toString());
 
-        //createNewGraphics(galtonboard);
-
-        galtonboard.dropBalls(1024);
-        System.out.println(Galtonboard.getBallsPerBinString(Galtonboard.createHistogramArray(galtonboard.getBallsPerBin())));
+        galtonboard.dropBalls(1);
+        //galtonboard.dropBalls(512);
+        System.out.println(Galtonboard.getBallsPerBinString(
+                               Galtonboard.createHistogramArray(
+                                   galtonboard.getBallsPerBin())));
+        createNewGraphics(galtonboard);
     }
 
     public static String parseBracketedToString(String str) {

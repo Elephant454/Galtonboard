@@ -60,10 +60,10 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         g2.clearRect(0, 0, getWidth(), getHeight());
 
         // numberOfBins - 1 is the number of divisions between bins
-        int xDelta = this.getWidth() / (galtonboard.getNumberOfBins() - 1);
+        //int xDelta = this.getWidth() / (galtonboard.getNumberOfBins() - 1);
+        int xDelta = this.getWidth() / (galtonboard.getNumberOfBins());
         for(int i=0; i<galtonboard.getNumberOfBins(); i++) {
-            
-            System.out.println(i + "," + i*xDelta);
+            //System.out.println(i + "," + i*xDelta);
             g2.drawLine(i*xDelta, getHeight(), i*xDelta, getHeight() - binHeight);
         }
     }
