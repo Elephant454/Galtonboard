@@ -49,4 +49,9 @@ public abstract class BallPosition implements Iterable<Ball>{
         
         return result.toString();
     }
+
+    public int getNumberOfBalls() {
+        return ballQueue.size();
+    }
+    
 }
