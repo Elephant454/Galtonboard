@@ -128,5 +128,8 @@ public class Galtonboard {
         return result.toString();
     }
 
+    public BallPosition[][] getLayers() {
+        return this.layers;
+    }
     
 }

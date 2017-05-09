@@ -17,6 +17,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     private int ballRadius = 10;
 
     private Galtonboard galtonboard;
+    private BallPosition[][] layers;
 
     // start of instance variables that I hastily copied over
     private static final long serialVersionUID = 42L;
@@ -37,6 +38,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
     public GaltonboardPanel(Galtonboard galtonboard) {
         this.galtonboard = galtonboard;
+        this.layers = galtonboard.getLayers();
 
         // start of parts of the constructor that I hastily copied over
         this.setLayout(new GridBagLayout());
@@ -62,10 +64,18 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         // numberOfBins - 1 is the number of divisions between bins
         //int xDelta = this.getWidth() / (galtonboard.getNumberOfBins() - 1);
         int xDelta = this.getWidth() / (galtonboard.getNumberOfBins());
-        for(int i=0; i<galtonboard.getNumberOfBins(); i++) {
-            //System.out.println(i + "," + i*xDelta);
-            g2.drawLine(i*xDelta, getHeight(), i*xDelta, getHeight() - binHeight);
+        for(int y=layers.length-1; y>0; y--) {
+            for(int x=0; x<layers[y].length; x++) {
+                g2.drawLine(x*this.getWidth() / layers[y].length, getHeight() - (y * getHeight() / layers.length), x*this.getWidth() / layers[y].length, getHeight() - ((y+1) * getHeight() / layers.length));
+            
+            }
+            
         }
+        
+        //for(int i=0; i<galtonboard.getNumberOfBins(); i++) {
+            //System.out.println(i + "," + i*xDelta);
+            //g2.drawLine(i*this.getWidth() / galtonboard.getNumberOfBins(), getHeight(), i*this.getWidth() / galtonboard.getNumberOfBins(), getHeight() - binHeight);
+        //}
     }
 
     long sleepLength;
