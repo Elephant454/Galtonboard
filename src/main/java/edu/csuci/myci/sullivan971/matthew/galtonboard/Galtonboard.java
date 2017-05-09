@@ -1,5 +1,8 @@
 package edu.csuci.myci.sullivan971.matthew.galtonboard;
 
+import java.util.Deque;
+import java.util.ArrayDeque;
+
 public class Galtonboard {
     private int numberOfBins;
     private BallPosition[][] layers;
@@ -76,12 +79,40 @@ public class Galtonboard {
         }catch (NullPointerException npe) {}
     }
 
+    public void dropBalls(int balls) {
+        for(int i=0; i<balls; i++) {
+            this.dropABall();
+        }
+    }
+
     public int getNumberOfBins() {return numberOfBins;}
     private void setNumberOfBins(int numberOfBins) {
         if(numberOfBins%2 == 1)
             throw new IllegalArgumentException("The number of bins must be"
                                                + " even.");
         else this.numberOfBins = numberOfBins;
+    }
+
+    public int[] getBallsPerBin() {
+        int[] result = new int[layers[layers.length-1].length];
         
+        for(int i=0; i<result.length; i++) {
+            result[i] = layers[layers.length-1][i].getNumberOfBalls();
+        }
+        
+        return result;
+    }
+
+    public static String getBallsPerBinString(int[] ballsPerBin) {
+        StringBuilder result = new StringBuilder("[");
+        
+        for(int i=0; i<ballsPerBin.length-2; i++) {
+            result.append(ballsPerBin[i]);
+            result.append(", ");
+        }
+        result.append(ballsPerBin[ballsPerBin.length-1]);
+        result.append("]");
+
+        return result.toString();
     }
 }
