@@ -10,9 +10,11 @@ public class Galtonboard {
     private RandomPalette randomPalette = new RandomPalette(0.8f, 0.7f);
     
     public Galtonboard (int numberOfBins){
-        if(numberOfBins%2 == 1) throw new IllegalArgumentException("The number of bins must be even.");
-        else this.numberOfBins = numberOfBins;
+        setNumberOfBins(numberOfBins);
+        generateGaltonBoard();
+    }
 
+    private void generateGaltonBoard() {
         // allocate an array of layers, with each layer being made up of
         //  BallPositions
         this.layers = new BallPosition[numberOfBins][];
@@ -27,8 +29,6 @@ public class Galtonboard {
         for(int i=layers.length-1; i>0; i--) {
             layers[i - 1] = generatePreviousLayer(layers[i]);
         }
-        
-        
     }
 
     public BallPosition[] generatePreviousLayer(BallPosition[] layer) {
@@ -74,5 +74,14 @@ public class Galtonboard {
                 currentBallPosition = previousBallPosition.chooseDirection();
             }
         }catch (NullPointerException npe) {}
+    }
+
+    public int getNumberOfBins() {return numberOfBins;}
+    private void setNumberOfBins(int numberOfBins) {
+        if(numberOfBins%2 == 1)
+            throw new IllegalArgumentException("The number of bins must be"
+                                               + " even.");
+        else this.numberOfBins = numberOfBins;
+        
     }
 }
