@@ -8,12 +8,19 @@ public class Main {
         // createGraphics();
 
         // create a new Galtonboard with 4 bins
-        Galtonboard galtonboard = new Galtonboard(4);
-        System.out.println(parseBracketedToString(galtonboard.toString()));
+        //Galtonboard galtonboard = new Galtonboard(4);
+        //Galtonboard galtonboard = new Galtonboard(16);
+        Galtonboard galtonboard = new Galtonboard(64);
+        
+        //System.out.println(parseBracketedToString(galtonboard.toString()));
+
+        //galtonboard.dropABall();
         //System.out.println(galtonboard.toString());
 
-        galtonboard.dropABall();
-        System.out.println(galtonboard.toString());
+        //createNewGraphics(galtonboard);
+
+        galtonboard.dropBalls(512);
+        System.out.println(Galtonboard.getBallsPerBinString(galtonboard.getBallsPerBin()));
     }
 
     public static String parseBracketedToString(String str) {
@@ -47,7 +54,40 @@ public class Main {
         return result.toString();
     }
 
-    public static void createGraphics() {
+    public static void createNewGraphics(Galtonboard galtonboard) {
+        try {
+            //System.out.println(UIManager.getSystemLookAndFeelClassName());
+            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+           // handle exception
+        }catch (ClassNotFoundException e) {
+            e.printStackTrace();
+           // handle exception
+        }catch (InstantiationException e) {
+            e.printStackTrace();
+           // handle exception
+        }catch (IllegalAccessException e) {
+            e.printStackTrace();
+           // handle exception
+        }
+
+        //Create the window
+        JFrame window = new JFrame("galtonboard");
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setLayout(new BorderLayout());
+
+        // Create a panel for the game to run inside
+        GaltonboardPanel galtonboardPanel = new GaltonboardPanel(galtonboard);
+        window.add(galtonboardPanel, BorderLayout.CENTER);
+
+        window.pack();
+        window.setSize(800, 600);
+        window.setVisible(true);
+    }
+    
+    public static void createOldGraphics() {
         // the graphics are from a previous project and currently don't do
         //  anything relevant
         try {
