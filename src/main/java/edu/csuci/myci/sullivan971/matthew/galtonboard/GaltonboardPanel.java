@@ -66,8 +66,10 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         int xDelta = this.getWidth() / (galtonboard.getNumberOfBins());
         for(int y=layers.length-1; y>0; y--) {
             for(int x=0; x<layers[y].length; x++) {
-                g2.drawLine(x*this.getWidth() / layers[y].length, getHeight() - (y * getHeight() / layers.length), x*this.getWidth() / layers[y].length, getHeight() - ((y+1) * getHeight() / layers.length));
-            
+                //g2.drawLine(x*this.getWidth() / layers[y].length, getHeight() - (y * getHeight() / layers.length), x*this.getWidth() / layers[y].length, getHeight() - ((y+1) * getHeight() / layers.length));
+                g2.drawLine(x*this.getWidth() / layers[y].length, getHeight() - ((layers.length - y) * getHeight() / layers.length), x*this.getWidth() / layers[y].length, getHeight() - ((layers.length - y + 1) * getHeight() / layers.length));
+
+                System.out.println("(" + x + "," + y + ")");
             }
             
         }

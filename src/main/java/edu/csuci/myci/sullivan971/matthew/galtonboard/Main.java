@@ -8,9 +8,9 @@ public class Main {
         // createGraphics();
 
         // create a new Galtonboard with 4 bins
-        //Galtonboard galtonboard = new Galtonboard(4);
+        Galtonboard galtonboard = new Galtonboard(4);
         //Galtonboard galtonboard = new Galtonboard(16);
-        Galtonboard galtonboard = new Galtonboard(64);
+        //Galtonboard galtonboard = new Galtonboard(64);
         
         //System.out.println(parseBracketedToString(galtonboard.toString()));
 
