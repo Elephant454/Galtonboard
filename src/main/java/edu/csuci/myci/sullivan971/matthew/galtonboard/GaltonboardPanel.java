@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 
 public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
-    final private int scalar = 6;
+    final private int scalar = 1;
     private double startHeight;
     private double screenHeightScalar;
     private double startWidth;
@@ -84,17 +84,18 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
     public void drawBoard(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
-
         g2.clearRect(0, 0, getWidth(), getHeight());
+
+        int x = (getWidth()/2)-(10*scalar);
+        int y = 20*scalar;
 
         g2.drawLine((getWidth()/2)-(10*scalar), 0, (getWidth()/2)-(10*scalar), (20*scalar));
         g2.drawLine((getWidth()/2)+(10*scalar), 0, (getWidth()/2)+(10*scalar), (20*scalar));
 
-        g2.drawLine((getWidth()/2)-(10*scalar), (20*this.scalar), 0, getHeight()-(20*scalar));
-        g2.drawLine((getWidth()/2)+(10*scalar), (20*this.scalar), getWidth(), getHeight()-(20*scalar));
+        g2.drawLine((getWidth()/2)-(10*scalar), (20*this.scalar), x+(int) (screenWidthScalar*(layers.length*-10)), y+layers.length*10);
+        g2.drawLine((getWidth()/2)+(10*scalar), (20*this.scalar), x+(int) (screenWidthScalar*(layers.length*10+20)), y+layers.length*10);
 
-        int x = (getWidth()/2)-(10*scalar);
-        int y = 20*scalar;
+
         for (int i=1; i<=layers.length; i++){
             x-= 10*scalar * screenWidthScalar;
             y+= 10*scalar * screenHeightScalar;
@@ -102,9 +103,11 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
                 drawPeg(x+(int)(20*scalar*j*screenWidthScalar), y, g2);
             }
         }
-        for (int j=1; j<=layers.length; j++){
-            g2.fillRect(x+(int)(20*scalar*j*screenWidthScalar)+4, y, (int)(4 * screenWidthScalar), getHeight()*(int)screenHeightScalar);
+        for (int j=0; j<=layers.length+1; j++){
+            g2.fillRect(x+(int)(20*scalar*j*screenWidthScalar), y, (int)(4 * screenWidthScalar * scalar), getHeight()*(int)screenHeightScalar);
         }
+
+
 
     }
 
