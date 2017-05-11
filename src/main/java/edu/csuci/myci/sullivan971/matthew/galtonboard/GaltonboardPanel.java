@@ -3,7 +3,6 @@ package edu.csuci.myci.sullivan971.matthew.galtonboard;
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;
 import javax.swing.JPanel;
-
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
@@ -15,6 +14,8 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     private double screenHeightScalar;
     private double startWidth;
     private double screenWidthScalar;
+    private int lineEndXL;
+    private int lineEndXR;
 
     private Galtonboard galtonboard;
     private BallPosition[][] layers;
@@ -73,27 +74,32 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         Graphics2D g2 = (Graphics2D) g;
         g2.clearRect(0, 0, getWidth(), getHeight());
 
-        int x = (getWidth()/2)-(10*scalar);
-        int y = 20*scalar;
+        int orgX = (getWidth()/2)-(10*scalar);
+        int orgY = 20*scalar;
+        int x=orgX;
+        int y=orgY;
 
         g2.drawLine((getWidth()/2)-(10*scalar), 0, (getWidth()/2)-(10*scalar), (20*scalar));
         g2.drawLine((getWidth()/2)+(10*scalar), 0, (getWidth()/2)+(10*scalar), (20*scalar));
 
-        g2.drawLine((getWidth()/2)-(10*scalar), (20*this.scalar), x+(int) (screenWidthScalar*(layers.length*-10)), y+layers.length*10);
-        g2.drawLine((getWidth()/2)+(10*scalar), (20*this.scalar), x+(int) (screenWidthScalar*(layers.length*10+20)), y+layers.length*10);
+
 
 
         for (int i=1; i<=layers.length; i++){
             x-= 10*scalar * screenWidthScalar;
             y+= 10*scalar * screenHeightScalar;
             for (int j=1; j<=i; j++){
-                drawPeg(x+(int)(20*scalar*j*screenWidthScalar), y, g2);
+                lineEndXL=x+(int)(20*scalar*j*screenWidthScalar);
+                lineEndXR=y;
+                drawPeg(lineEndXL, y, g2);
             }
         }
+
         for (int j=0; j<=layers.length+1; j++){
             g2.fillRect(x+(int)(20*scalar*j*screenWidthScalar), y, (int)(4 * screenWidthScalar * scalar), getHeight()*(int)screenHeightScalar);
         }
-
+        g2.drawLine((getWidth()/2)-(10*scalar), (20*this.scalar), orgX-(int)(20*layers.length*.5*screenWidthScalar), orgY+layers.length*10);
+        g2.drawLine((getWidth()/2)+(10*scalar), (20*this.scalar), lineEndXL+(20*scalar), orgY+layers.length*10);
 
 
     }
