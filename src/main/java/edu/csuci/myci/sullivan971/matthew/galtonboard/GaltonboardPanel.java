@@ -77,8 +77,6 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         int x=orgX;
         int y=orgY;
 
-        g2.drawLine((getWidth()/2)-(10*scalar), 0, (getWidth()/2)-(10*scalar), (20*scalar));
-        g2.drawLine((getWidth()/2)+(10*scalar), 0, (getWidth()/2)+(10*scalar), (20*scalar));
 
 
 
@@ -96,8 +94,6 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         for (int j=0; j<=layers.length+1; j++){
             g2.fillRect(x+(int)(20*scalar*j*screenWidthScalar), y, (int)(4 * screenWidthScalar * scalar), getHeight()*(int)screenHeightScalar);
         }
-        g2.drawLine((getWidth()/2)-(10*scalar), (20*this.scalar), orgX-(int)(20*layers.length*.5*screenWidthScalar), orgY+layers.length*10);
-        g2.drawLine((getWidth()/2)+(10*scalar), (20*this.scalar), lineEndXL+(20*scalar), orgY+layers.length*10);
 
 
     }
