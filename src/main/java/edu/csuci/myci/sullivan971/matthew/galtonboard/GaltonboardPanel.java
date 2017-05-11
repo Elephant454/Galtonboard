@@ -86,6 +86,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         g2.drawLine((getWidth()/2)+(10*scalar), (20*this.scalar), getWidth(), getHeight()-(20*scalar));
 
 
+
     }
 
     private void drawPeg(int x, int y, Graphics2D g2){
