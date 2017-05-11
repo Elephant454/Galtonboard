@@ -131,5 +131,9 @@ public class Galtonboard {
     public BallPosition[][] getLayers() {
         return this.layers;
     }
+
+    public int getCurrentBallId() {
+        return this.currentBallId;
+    }
     
 }

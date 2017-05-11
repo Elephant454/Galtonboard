@@ -14,10 +14,10 @@ public class Main {
         
         //System.out.println(parseBracketedToString(galtonboard.toString()));
 
-        //galtonboard.dropABall();
         //System.out.println(galtonboard.toString());
 
-        //galtonboard.dropBalls(512);
+        //galtonboard.dropBalls(1000);
+        galtonboard.dropABall();
         //System.out.println(Galtonboard.getBallsPerBinString(
         //Galtonboard.createHistogramArray(
         //galtonboard.getBallsPerBin())));

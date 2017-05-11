@@ -1,5 +1,7 @@
 package edu.csuci.myci.sullivan971.matthew.galtonboard;
 
+import java.awt.geom.Line2D.Double;
+import java.awt.geom.Line2D.Double;
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;
 import javax.swing.JPanel;
@@ -20,12 +22,14 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     private Galtonboard galtonboard;
     private BallPosition[][] layers;
 
+    RandomPalette randomPalette = new RandomPalette(0.5f, 0.6f);
+
     // start of instance variables that I hastily copied over
     private static final long serialVersionUID = 42L;
 
     boolean running = true;
 
-    boolean drawBoardStage = true;
+    boolean drawBoardStage = false;
 
     float oldTime = System.nanoTime();
     float currentTime = oldTime;
@@ -63,6 +67,11 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     
     @Override
     public void paintComponent (Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.clearRect(0, 0, getWidth(), getHeight());
+        
+        g2.drawString(Float.toString(this.fps), 20, 20);
+        
         screenHeightScalar = getHeight()/startHeight;
         screenWidthScalar = getWidth()/startWidth;
         
@@ -72,7 +81,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
     public void drawBoard(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
-        g2.clearRect(0, 0, getWidth(), getHeight());
+        //g2.clearRect(0, 0, getWidth(), getHeight());
 
         int orgX = (getWidth()/2)-(10*scalar);
         int orgY = 20*scalar;
@@ -97,6 +106,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
             g2.fillRect(x+(int)(20*scalar*j*screenWidthScalar), y, (int)(4 * screenWidthScalar * scalar), getHeight()*(int)screenHeightScalar);
         }
 
+        g2.drawOval((int)(screenWidthScalar)*(getWidth()/2),20,10,10);
 
     }
 
@@ -117,20 +127,25 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         //}
         //}
 
-        int[] ballsPerBin = galtonboard.getBallsPerBin();
-        //int totalBalls = (int) Arrays.stream(ballsPerBin).summaryStatistics().getSum();
-        int max = Arrays.stream(ballsPerBin).summaryStatistics().getMax();
-
-        galtonboard.dropBalls(100);
-
-        //System.out.println(max);
         
-        int xDelta = this.getWidth() / galtonboard.getNumberOfBins();
-        int yDelta = this.getHeight() / max;
-        int binHeight = 10;
+        //int[] ballsPerBin = galtonboard.getBallsPerBin();
+        //int totalBalls = (int) Arrays.stream(ballsPerBin).summaryStatistics().getSum();
+        //int max = Arrays.stream(ballsPerBin).summaryStatistics().getMax();
+
+        //galtonboard.dropBalls(100);
+        //System.out.println(galtonboard.getCurrentBallId());
+
+        int scalar = 1;
+        
+        double xDelta = this.getWidth() / galtonboard.getNumberOfBins();
+        double yDelta = this.getHeight() / galtonboard.getCurrentBallId();
         for(int i=0; i<galtonboard.getNumberOfBins(); i++) {
             //System.out.println(i + "," + i*xDelta);
-            g2.drawLine(i*xDelta, getHeight(), i*xDelta, getHeight() - ballsPerBin[i]*yDelta);
+            g2.setPaint(randomPalette.next());
+            //g2.draw(new java.awt.geom.Line2D.Double(i*xDelta, getHeight(), i*xDelta, getHeight() - galtonboard.getBallsPerBin()[i]*yDelta*scalar));
+            g2.drawLine((int)(i*xDelta), getHeight(), (int)(i*xDelta), (int)(getHeight() - galtonboard.getBallsPerBin()[i]*yDelta*scalar));
+
+            System.out.println(getHeight() - galtonboard.getBallsPerBin()[i]*yDelta*scalar);
         }
     }
 
@@ -141,7 +156,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
             // do the actual logic for this tick
             repaint();
-            //galtonboard.dropBalls(100);
+            galtonboard.dropABall();
 
             // use the difference in time to determine how long we should sleep
             // for this tick
