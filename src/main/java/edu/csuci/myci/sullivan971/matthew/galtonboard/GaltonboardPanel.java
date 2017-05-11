@@ -11,6 +11,8 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     final private int scalar = 6;
     private double startHeight;
     private double screenHeightScalar;
+    private double startWidth;
+    private double screenWidthScalar;
 
     private Galtonboard galtonboard;
     private BallPosition[][] layers;
@@ -47,7 +49,8 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         setFocusable(true);
         addKeyListener(this);
         this.startHeight = 600;
-        this.setSize(800, (int)startHeight);
+        this.startWidth = 800;
+        this.setSize((int)startWidth, (int)startHeight);
         this.requestFocusInWindow(true);
         drawingThread.start();
     }
@@ -57,6 +60,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     public void paintComponent (Graphics g) {
         drawBoard(g);
         screenHeightScalar = getHeight()/startHeight;
+        screenWidthScalar = getWidth()/startWidth;
         /**
          // numberOfBins - 1 is the number of divisions between bins
          //int xDelta = this.getWidth() / (galtonboard.getNumberOfBins() - 1);
@@ -92,26 +96,20 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         int x = (getWidth()/2)-(10*scalar);
         int y = 20*scalar;
         for (int i=1; i<=layers.length; i++){
-            x-= 10*scalar;
+            x-= 10*scalar * screenWidthScalar;
             y+= 10*scalar * screenHeightScalar;
-            System.out.println(screenHeightScalar);
             for (int j=1; j<=i; j++){
-                drawPeg(x+(20*scalar*j), y, g2);
+                drawPeg(x+(int)(20*scalar*j*screenWidthScalar), y, g2);
             }
+        }
+        for (int j=1; j<=layers.length; j++){
+            g2.fillRect(x+(int)(20*scalar*j*screenWidthScalar)+4, y, (int)(4 * screenWidthScalar), getHeight()*(int)screenHeightScalar);
         }
 
     }
 
     private void drawPeg(int x, int y, Graphics2D g2){
         g2.fillOval(x-(scalar), y-(scalar), 4*scalar, 4*scalar);
-        /**
-        g2.drawRect(x-(2*scalar), y-(2*scalar), x+(2*scalar), y+(2*scalar));
-        System.out.println("awsedrtfvgybuhnijmokmjnihubgyvftcd");
-        System.out.println(x-(2*scalar));
-        System.out.println(y-(2*scalar));
-        System.out.println(x+(2*scalar));
-        System.out.println(y+(2*scalar));
-         **/
     }
 
     long sleepLength;
