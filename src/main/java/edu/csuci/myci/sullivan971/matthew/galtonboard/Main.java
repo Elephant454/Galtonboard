@@ -17,11 +17,10 @@ public class Main {
         //galtonboard.dropABall();
         //System.out.println(galtonboard.toString());
 
-        galtonboard.dropBalls(1);
         //galtonboard.dropBalls(512);
-        System.out.println(Galtonboard.getBallsPerBinString(
-                               Galtonboard.createHistogramArray(
-                                   galtonboard.getBallsPerBin())));
+        //System.out.println(Galtonboard.getBallsPerBinString(
+        //Galtonboard.createHistogramArray(
+        //galtonboard.getBallsPerBin())));
         createNewGraphics(galtonboard);
     }
 

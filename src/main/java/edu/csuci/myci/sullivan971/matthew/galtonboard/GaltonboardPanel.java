@@ -1,5 +1,7 @@
 package edu.csuci.myci.sullivan971.matthew.galtonboard;
 
+import java.util.Arrays;
+import java.util.IntSummaryStatistics;
 import javax.swing.JPanel;
 
 import java.awt.*;
@@ -22,7 +24,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
     boolean running = true;
 
-    boolean drawBoardStage = false;
+    boolean drawBoardStage = true;
 
     float oldTime = System.nanoTime();
     float currentTime = oldTime;
@@ -113,14 +115,21 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         //}
         //}
 
-        Galtonboard.createHistogramArray(galtonboard.getBallsPerBin());
+        int[] ballsPerBin = galtonboard.getBallsPerBin();
+        //int totalBalls = (int) Arrays.stream(ballsPerBin).summaryStatistics().getSum();
+        int max = Arrays.stream(ballsPerBin).summaryStatistics().getMax();
+
+        galtonboard.dropBalls(100);
+
+        //System.out.println(max);
         
-         for(int i=0; i<galtonboard.getNumberOfBins(); i++) {
-             int xDelta = this.getWidth() / (galtonboard.getNumberOfBins());
-             int binHeight = 10;
-             System.out.println(i + "," + i*xDelta);
-             g2.drawLine(i*this.getWidth() / galtonboard.getNumberOfBins(), i*getHeight(), i*this.getWidth() / galtonboard.getNumberOfBins(), getHeight() - binHeight);
-         }
+        int xDelta = this.getWidth() / galtonboard.getNumberOfBins();
+        int yDelta = this.getHeight() / max;
+        int binHeight = 10;
+        for(int i=0; i<galtonboard.getNumberOfBins(); i++) {
+            //System.out.println(i + "," + i*xDelta);
+            g2.drawLine(i*xDelta, getHeight(), i*xDelta, getHeight() - ballsPerBin[i]*yDelta);
+        }
     }
 
     long sleepLength;
@@ -130,6 +139,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
             // do the actual logic for this tick
             repaint();
+            //galtonboard.dropBalls(100);
 
             // use the difference in time to determine how long we should sleep
             // for this tick
