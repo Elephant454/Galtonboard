@@ -8,7 +8,9 @@ import java.awt.event.KeyEvent;
 
 public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
-    private int scalar = 1;
+    final private int scalar = 6;
+    private double startHeight;
+    private double screenHeightScalar;
 
     private Galtonboard galtonboard;
     private BallPosition[][] layers;
@@ -34,6 +36,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         this.galtonboard = galtonboard;
         this.layers = galtonboard.getLayers();
 
+
         // start of parts of the constructor that I hastily copied over
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -43,7 +46,8 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
         setFocusable(true);
         addKeyListener(this);
-        this.setSize(800, 600);
+        this.startHeight = 600;
+        this.setSize(800, (int)startHeight);
         this.requestFocusInWindow(true);
         drawingThread.start();
     }
@@ -52,7 +56,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     @Override
     public void paintComponent (Graphics g) {
         drawBoard(g);
-
+        screenHeightScalar = getHeight()/startHeight;
         /**
          // numberOfBins - 1 is the number of divisions between bins
          //int xDelta = this.getWidth() / (galtonboard.getNumberOfBins() - 1);
@@ -85,12 +89,29 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         g2.drawLine((getWidth()/2)-(10*scalar), (20*this.scalar), 0, getHeight()-(20*scalar));
         g2.drawLine((getWidth()/2)+(10*scalar), (20*this.scalar), getWidth(), getHeight()-(20*scalar));
 
-
+        int x = (getWidth()/2)-(10*scalar);
+        int y = 20*scalar;
+        for (int i=1; i<=layers.length; i++){
+            x-= 10*scalar;
+            y+= 10*scalar * screenHeightScalar;
+            System.out.println(screenHeightScalar);
+            for (int j=1; j<=i; j++){
+                drawPeg(x+(20*scalar*j), y, g2);
+            }
+        }
 
     }
 
     private void drawPeg(int x, int y, Graphics2D g2){
-        g2.drawOval(x-(2*scalar), y-(2*scalar), x+(2*scalar), y+(2*scalar));
+        g2.fillOval(x-(scalar), y-(scalar), 4*scalar, 4*scalar);
+        /**
+        g2.drawRect(x-(2*scalar), y-(2*scalar), x+(2*scalar), y+(2*scalar));
+        System.out.println("awsedrtfvgybuhnijmokmjnihubgyvftcd");
+        System.out.println(x-(2*scalar));
+        System.out.println(y-(2*scalar));
+        System.out.println(x+(2*scalar));
+        System.out.println(y+(2*scalar));
+         **/
     }
 
     long sleepLength;
