@@ -18,6 +18,8 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
     boolean running = true;
 
+    boolean drawBoardStage = false;
+
     float oldTime = System.nanoTime();
     float currentTime = oldTime;
     float deltaTime = 0;
@@ -51,27 +53,8 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     
     @Override
     public void paintComponent (Graphics g) {
-        drawBoard(g);
-
-        /**
-         // numberOfBins - 1 is the number of divisions between bins
-         //int xDelta = this.getWidth() / (galtonboard.getNumberOfBins() - 1);
-         int xDelta = this.getWidth() / (galtonboard.getNumberOfBins());
-         for(int y=layers.length-1; y>0; y--) {
-         for(int x=0; x<layers[y].length; x++) {
-         //g2.drawLine(x*this.getWidth() / layers[y].length, getHeight() - (y * getHeight() / layers.length), x*this.getWidth() / layers[y].length, getHeight() - ((y+1) * getHeight() / layers.length));
-         g2.drawLine(x*this.getWidth() / layers[y].length, getHeight() - ((layers.length - y) * getHeight() / layers.length), x*this.getWidth() / layers[y].length, getHeight() - ((layers.length - y + 1) * getHeight() / layers.length));
-
-         System.out.println("(" + x + "," + y + ")");
-         }
-
-         }
-
-         //for(int i=0; i<galtonboard.getNumberOfBins(); i++) {
-         //System.out.println(i + "," + i*xDelta);
-         //g2.drawLine(i*this.getWidth() / galtonboard.getNumberOfBins(), getHeight(), i*this.getWidth() / galtonboard.getNumberOfBins(), getHeight() - binHeight);
-         //}
-         **/
+        if (drawBoardStage) drawBoard(g);
+        else drawHistogram(g);
     }
 
     public void drawBoard(Graphics g){
@@ -91,6 +74,29 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
     private void drawPeg(int x, int y, Graphics2D g2){
         g2.drawOval(x-(2*scalar), y-(2*scalar), x+(2*scalar), y+(2*scalar));
+    }
+
+    private void drawHistogram(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+         // numberOfBins - 1 is the number of divisions between bins
+         //int xDelta = this.getWidth() / (galtonboard.getNumberOfBins() - 1);
+         //int xDelta = this.getWidth() / (galtonboard.getNumberOfBins());
+         //for(int y=layers.length-1; y>0; y--) {
+         //for(int x=0; x<layers[y].length; x++) {
+                 //g2.drawLine(x*this.getWidth() / layers[y].length, getHeight() - (y * getHeight() / layers.length), x*this.getWidth() / layers[y].length, getHeight() - ((y+1) * getHeight() / layers.length));
+                 //g2.drawLine(x*this.getWidth() / layers[y].length, getHeight() - ((layers.length - y) * getHeight() / layers.length), x*this.getWidth() / layers[y].length, getHeight() - ((layers.length - y + 1) * getHeight() / layers.length));
+                 //System.out.println("(" + x + "," + y + ")");
+        //}
+        //}
+
+        Galtonboard.createHistogramArray(galtonboard.getBallsPerBin());
+        
+         for(int i=0; i<galtonboard.getNumberOfBins(); i++) {
+             int xDelta = this.getWidth() / (galtonboard.getNumberOfBins());
+             int binHeight = 10;
+             System.out.println(i + "," + i*xDelta);
+             g2.drawLine(i*this.getWidth() / galtonboard.getNumberOfBins(), i*getHeight(), i*this.getWidth() / galtonboard.getNumberOfBins(), getHeight() - binHeight);
+         }
     }
 
     long sleepLength;
