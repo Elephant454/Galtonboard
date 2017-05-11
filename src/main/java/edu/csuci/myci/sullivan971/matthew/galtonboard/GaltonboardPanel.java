@@ -8,7 +8,11 @@ import java.awt.event.KeyEvent;
 
 public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
-    private int scalar = 1;
+    final private int scalar = 1;
+    private double startHeight;
+    private double screenHeightScalar;
+    private double startWidth;
+    private double screenWidthScalar;
 
     private Galtonboard galtonboard;
     private BallPosition[][] layers;
@@ -36,6 +40,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
         this.galtonboard = galtonboard;
         this.layers = galtonboard.getLayers();
 
+
         // start of parts of the constructor that I hastily copied over
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -45,7 +50,9 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
         setFocusable(true);
         addKeyListener(this);
-        this.setSize(800, 600);
+        this.startHeight = 600;
+        this.startWidth = 800;
+        this.setSize((int)startWidth, (int)startHeight);
         this.requestFocusInWindow(true);
         drawingThread.start();
     }
@@ -53,27 +60,44 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
     
     @Override
     public void paintComponent (Graphics g) {
+        screenHeightScalar = getHeight()/startHeight;
+        screenWidthScalar = getWidth()/startWidth;
+        
         if (drawBoardStage) drawBoard(g);
         else drawHistogram(g);
     }
 
     public void drawBoard(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
-
         g2.clearRect(0, 0, getWidth(), getHeight());
+
+        int x = (getWidth()/2)-(10*scalar);
+        int y = 20*scalar;
 
         g2.drawLine((getWidth()/2)-(10*scalar), 0, (getWidth()/2)-(10*scalar), (20*scalar));
         g2.drawLine((getWidth()/2)+(10*scalar), 0, (getWidth()/2)+(10*scalar), (20*scalar));
 
-        g2.drawLine((getWidth()/2)-(10*scalar), (20*this.scalar), 0, getHeight()-(20*scalar));
-        g2.drawLine((getWidth()/2)+(10*scalar), (20*this.scalar), getWidth(), getHeight()-(20*scalar));
+        g2.drawLine((getWidth()/2)-(10*scalar), (20*this.scalar), x+(int) (screenWidthScalar*(layers.length*-10)), y+layers.length*10);
+        g2.drawLine((getWidth()/2)+(10*scalar), (20*this.scalar), x+(int) (screenWidthScalar*(layers.length*10+20)), y+layers.length*10);
+
+
+        for (int i=1; i<=layers.length; i++){
+            x-= 10*scalar * screenWidthScalar;
+            y+= 10*scalar * screenHeightScalar;
+            for (int j=1; j<=i; j++){
+                drawPeg(x+(int)(20*scalar*j*screenWidthScalar), y, g2);
+            }
+        }
+        for (int j=0; j<=layers.length+1; j++){
+            g2.fillRect(x+(int)(20*scalar*j*screenWidthScalar), y, (int)(4 * screenWidthScalar * scalar), getHeight()*(int)screenHeightScalar);
+        }
 
 
 
     }
 
     private void drawPeg(int x, int y, Graphics2D g2){
-        g2.drawOval(x-(2*scalar), y-(2*scalar), x+(2*scalar), y+(2*scalar));
+        g2.fillOval(x-(scalar), y-(scalar), 4*scalar, 4*scalar);
     }
 
     private void drawHistogram(Graphics g) {

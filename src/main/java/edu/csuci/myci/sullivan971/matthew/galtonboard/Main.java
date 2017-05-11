@@ -8,7 +8,7 @@ public class Main {
         // createGraphics();
 
         // create a new Galtonboard with 4 bins
-        Galtonboard galtonboard = new Galtonboard(4);
+        Galtonboard galtonboard = new Galtonboard(30);
         //Galtonboard galtonboard = new Galtonboard(16);
         //Galtonboard galtonboard = new Galtonboard(64);
         
