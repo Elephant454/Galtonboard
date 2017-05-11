@@ -7,14 +7,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
 public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
-    private int binWidth = 10;
-    private int binHeight = 50;
 
-    private int pegRadius = 5;
-    private int pegDeltaX = 20;
-    private int pegDeltaY = 20;
-
-    private int ballRadius = 10;
+    private int scalar = 1;
 
     private Galtonboard galtonboard;
     private BallPosition[][] layers;
@@ -61,6 +55,15 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
 
         g2.clearRect(0, 0, getWidth(), getHeight());
 
+        g2.drawLine((getWidth()/2)-(10*this.scalar), 0, (getWidth()/2)-(10*this.scalar), (20*this.scalar));
+        g2.drawLine((getWidth()/2)+(10*this.scalar), 0, (getWidth()/2)+(10*this.scalar), (20*this.scalar));
+
+        g2.drawLine((getWidth()/2)-(10*this.scalar), (20*this.scalar), 0, getHeight()-(20*scalar));
+        g2.drawLine((getWidth()/2)+(10*this.scalar), (20*this.scalar), getWidth(), getHeight()-(20*scalar));
+
+
+
+        /**
         // numberOfBins - 1 is the number of divisions between bins
         //int xDelta = this.getWidth() / (galtonboard.getNumberOfBins() - 1);
         int xDelta = this.getWidth() / (galtonboard.getNumberOfBins());
@@ -78,6 +81,7 @@ public class GaltonboardPanel extends JPanel implements KeyListener, Runnable {
             //System.out.println(i + "," + i*xDelta);
             //g2.drawLine(i*this.getWidth() / galtonboard.getNumberOfBins(), getHeight(), i*this.getWidth() / galtonboard.getNumberOfBins(), getHeight() - binHeight);
         //}
+         **/
     }
 
     long sleepLength;
